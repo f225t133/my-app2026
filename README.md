@@ -2,6 +2,8 @@
 
 HTML, CSS, JavaScriptだけで構築された、シンプルで使いやすい日記アプリケーションです。ブラウザのLocalStorageを利用するため、サーバー不要で動作し、データはあなたのデバイス内のみに保存されます。
 
+![My Simple Diary Preview](image.png)
+
 ## アプリURL
 👉 [https://f225t133.github.io/my-app2026/](https://f225t133.github.io/my-app2026/)
 
