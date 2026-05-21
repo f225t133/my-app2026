@@ -53,6 +53,11 @@ const themeToggle = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('sunIcon');
 const moonIcon = document.getElementById('moonIcon');
 
+const bgmAudio = document.getElementById('bgmAudio');
+const bgmToggle = document.getElementById('bgmToggle');
+const musicIcon = document.getElementById('musicIcon');
+const muteIcon = document.getElementById('muteIcon');
+
 // --- Toast notification ---
 function showToast(message, isError = false) {
     const toast = document.getElementById('toast');
@@ -412,6 +417,20 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     sunIcon.classList.toggle('hidden', !isDark);
     moonIcon.classList.toggle('hidden', isDark);
+});
+
+bgmToggle.addEventListener('click', () => {
+    if (bgmAudio.paused) {
+        bgmAudio.play();
+        musicIcon.classList.add('hidden');
+        muteIcon.classList.remove('hidden');
+        showToast("BGMをながしたよ🎶");
+    } else {
+        bgmAudio.pause();
+        musicIcon.classList.remove('hidden');
+        muteIcon.classList.add('hidden');
+        showToast("BGMをとめたよ");
+    }
 });
 
 prevMonthBtn.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });

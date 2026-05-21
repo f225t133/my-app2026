@@ -54,6 +54,15 @@
                     <i data-lucide="sun" id="sunIcon" class="w-6 h-6 hidden"></i>
                     <i data-lucide="moon" id="moonIcon" class="w-6 h-6"></i>
                 </button>
+
+                <!-- BGM Toggle -->
+                <button id="bgmToggle" class="puri-btn px-4 py-3 bg-white dark:bg-zinc-800 text-p-pink" title="BGMをながす">
+                    <i data-lucide="music" id="musicIcon" class="w-6 h-6"></i>
+                    <i data-lucide="volume-x" id="muteIcon" class="w-6 h-6 hidden"></i>
+                </button>
+                <audio id="bgmAudio" loop>
+                    <source src="Porcelain_Cups_and_Sunbeams.mp3" type="audio/mpeg">
+                </audio>
                 
                 <!-- Backup -->
                 <button id="exportBtn" class="puri-btn px-4 py-3 bg-p-blue text-white" title="日記をのこす">
