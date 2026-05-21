@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Noonnu+Basic:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.diary-paper {
+    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+.dark .diary-paper {
+    background-image: radial-gradient(#374151 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+/* Custom scrollbar for the diary list */
+#diaryList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#diaryList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#diaryList::-webkit-scrollbar-thumb {
+    background: #d5bdaf;
+    border-radius: 10px;
+}
+
+.dark #diaryList::-webkit-scrollbar-thumb {
+    background: #355070;
+}

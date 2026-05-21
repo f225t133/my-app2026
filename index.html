@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Diary - 私の日記帳</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        diary: {
+                            50: '#fdfbf7',
+                            100: '#f7f3e9',
+                            200: '#e3d5ca',
+                            300: '#d5bdaf',
+                            400: '#b5838d',
+                            500: '#6d597a',
+                            600: '#355070',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-100 dark:bg-zinc-900 text-stone-800 dark:text-zinc-100 min-h-screen transition-colors duration-200">
+
+    <div class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+        <!-- Header -->
+        <header class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 pb-6 border-b border-stone-200 dark:border-zinc-800">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-diary-500 text-white rounded-2xl shadow-md">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight text-stone-800 dark:text-stone-100">My Simple Diary</h1>
+                    <p class="text-xs text-stone-500 dark:text-zinc-400">日々のささやかな出来事と気持ちを記録する</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="p-2.5 bg-white dark:bg-zinc-800 border border-stone-200 dark:border-zinc-700 rounded-xl hover:bg-stone-50 dark:hover:bg-zinc-700 transition" title="テーマ切り替え">
+                    <i data-lucide="sun" id="sunIcon" class="w-5 h-5 hidden"></i>
+                    <i data-lucide="moon" id="moonIcon" class="w-5 h-5"></i>
+                </button>
+                
+                <!-- Backup & Import -->
+                <button id="exportBtn" class="flex items-center gap-1.5 px-3.5 py-2.5 text-sm bg-white dark:bg-zinc-800 border border-stone-200 dark:border-zinc-700 rounded-xl hover:bg-stone-50 dark:hover:bg-zinc-700 transition" title="日記データをダウンロード">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span class="hidden md:inline">エクスポート</span>
+                </button>
+                <button id="importBtn" class="flex items-center gap-1.5 px-3.5 py-2.5 text-sm bg-white dark:bg-zinc-800 border border-stone-200 dark:border-zinc-700 rounded-xl hover:bg-stone-50 dark:hover:bg-zinc-700 transition" title="日記データを復元">
+                    <i data-lucide="upload" class="w-4 h-4"></i>
+                    <span class="hidden md:inline">インポート</span>
+                </button>
+                <input type="file" id="fileInput" class="hidden" accept=".json">
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Calendar & History -->
+            <section class="lg:col-span-5 flex flex-col gap-6">
+                <!-- Calendar Card -->
+                <div class="bg-white dark:bg-zinc-800 rounded-3xl p-6 shadow-sm border border-stone-100 dark:border-zinc-800">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold flex items-center gap-2">
+                            <i data-lucide="calendar" class="w-5 h-5 text-diary-500"></i>
+                            日付を選択
+                        </h2>
+                        <div class="flex items-center gap-2">
+                            <button id="todayBtn" class="text-xs px-2 py-1 bg-stone-100 dark:bg-zinc-700 hover:bg-stone-200 dark:hover:bg-zinc-600 rounded-lg transition font-medium">今日</button>
+                            <div class="flex gap-1 border-l border-stone-100 dark:border-zinc-700 pl-2">
+                                <button id="prevMonth" class="p-1.5 hover:bg-stone-100 dark:hover:bg-zinc-700 rounded-lg transition">
+                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                </button>
+                                <span id="calendarYearMonth" class="font-medium text-sm px-1 py-1 min-w-[85px] text-center">2026年 5月</span>
+                                <button id="nextMonth" class="p-1.5 hover:bg-stone-100 dark:hover:bg-zinc-700 rounded-lg transition">
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Calendar Grid -->
+                    <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-stone-500 dark:text-zinc-400 mb-2">
+                        <div class="text-rose-500">日</div>
+                        <div>月</div>
+                        <div>火</div>
+                        <div>水</div>
+                        <div>木</div>
+                        <div>金</div>
+                        <div class="text-sky-500">土</div>
+                    </div>
+                    <div id="calendarDays" class="grid grid-cols-7 gap-1.5 text-center">
+                        <!-- JS generated days -->
+                    </div>
+                </div>
+
+                <!-- Diary List Summary -->
+                <div class="bg-white dark:bg-zinc-800 rounded-3xl p-6 shadow-sm border border-stone-100 dark:border-zinc-800 flex-1 flex flex-col min-h-[300px]">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold flex items-center gap-2">
+                            <i data-lucide="history" class="w-5 h-5 text-diary-500"></i>
+                            最近の日記
+                        </h2>
+                        <span id="diaryCount" class="text-xs bg-stone-100 dark:bg-zinc-700 text-stone-600 dark:text-zinc-300 px-2.5 py-1 rounded-full font-medium">0件</span>
+                    </div>
+                    
+                    <!-- Search -->
+                    <div class="relative mb-4">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-stone-400">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </span>
+                        <input type="text" id="searchBar" placeholder="日記を検索..." class="w-full pl-9 pr-4 py-2 text-sm bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-diary-500 dark:focus:ring-diary-400">
+                    </div>
+
+                    <!-- List Container -->
+                    <div id="diaryList" class="flex-1 overflow-y-auto max-h-[320px] space-y-3 pr-1">
+                        <!-- JS generated list items -->
+                        <div class="text-center text-stone-400 dark:text-zinc-500 py-8 text-sm">日記がまだありません</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Editor & Viewer -->
+            <section class="lg:col-span-7 flex flex-col">
+                <div class="bg-white dark:bg-zinc-800 rounded-3xl shadow-sm border border-stone-100 dark:border-zinc-800 flex-1 flex flex-col diary-paper min-h-[500px]">
+                    
+                    <!-- Editor Header / Date Control -->
+                    <div class="p-6 border-b border-stone-100 dark:border-zinc-700/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/80 dark:bg-zinc-800/80 backdrop-blur rounded-t-3xl">
+                        <div>
+                            <div class="flex items-center gap-2 text-sm text-stone-500 dark:text-zinc-400 mb-1">
+                                <span id="selectedDayOfWeek" class="bg-diary-100 dark:bg-zinc-700 text-diary-600 dark:text-diary-300 px-2 py-0.5 rounded-md font-medium text-xs">金曜日</span>
+                                <span id="selectedFullDate">2026年5月22日</span>
+                            </div>
+                            <h2 class="text-xl font-bold" id="editorViewTitle">日記を書く / 編集する</h2>
+                        </div>
+                        
+                        <!-- Actions -->
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                            <button id="deleteBtn" class="hidden px-3.5 py-2 text-sm text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-xl transition font-medium flex items-center gap-1">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                削除
+                            </button>
+                            <button id="saveBtn" class="px-5 py-2.5 text-sm bg-diary-500 hover:bg-diary-600 text-white rounded-xl shadow-md shadow-diary-500/10 transition font-semibold flex items-center gap-1.5">
+                                <i data-lucide="save" class="w-4 h-4"></i>
+                                保存する
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Editor Body -->
+                    <div class="p-6 flex-1 flex flex-col gap-5">
+                        <!-- Mood Selector -->
+                        <div>
+                            <label class="block text-xs font-bold text-stone-400 dark:text-zinc-500 uppercase tracking-wider mb-2">今日の気分 (Mood)</label>
+                            <div class="flex gap-2" id="moodSelector">
+                                <button data-mood="happy" class="mood-btn flex-1 py-2 px-3 rounded-2xl bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 hover:border-diary-300 dark:hover:border-diary-500 transition text-center" title="とても良い">
+                                    <span class="text-xl block mb-1">😆</span>
+                                    <span class="text-[10px] text-stone-500 dark:text-zinc-400">快適</span>
+                                </button>
+                                <button data-mood="good" class="mood-btn flex-1 py-2 px-3 rounded-2xl bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 hover:border-diary-300 dark:hover:border-diary-500 transition text-center" title="普通・良い">
+                                    <span class="text-xl block mb-1">😊</span>
+                                    <span class="text-[10px] text-stone-500 dark:text-zinc-400">良い</span>
+                                </button>
+                                <button data-mood="neutral" class="mood-btn flex-1 py-2 px-3 rounded-2xl bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 hover:border-diary-300 dark:hover:border-diary-500 transition text-center" title="普通">
+                                    <span class="text-xl block mb-1">😐</span>
+                                    <span class="text-[10px] text-stone-500 dark:text-zinc-400">普通</span>
+                                </button>
+                                <button data-mood="tired" class="mood-btn flex-1 py-2 px-3 rounded-2xl bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 hover:border-diary-300 dark:hover:border-diary-500 transition text-center" title="疲れた">
+                                    <span class="text-xl block mb-1">🥱</span>
+                                    <span class="text-[10px] text-stone-500 dark:text-zinc-400">お疲れ</span>
+                                </button>
+                                <button data-mood="sad" class="mood-btn flex-1 py-2 px-3 rounded-2xl bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 hover:border-diary-300 dark:hover:border-diary-500 transition text-center" title="悲しい/うまくいかない">
+                                    <span class="text-xl block mb-1">😢</span>
+                                    <span class="text-[10px] text-stone-500 dark:text-zinc-400">いまいち</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Title Input -->
+                        <div>
+                            <label for="diaryTitle" class="block text-xs font-bold text-stone-400 dark:text-zinc-500 uppercase tracking-wider mb-2">タイトル</label>
+                            <input type="text" id="diaryTitle" placeholder="今日を一言で表すと？" class="w-full px-4 py-3 bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-diary-500 dark:focus:ring-diary-400 font-semibold text-stone-800 dark:text-stone-100">
+                        </div>
+
+                        <!-- Content Input -->
+                        <div class="flex-1 flex flex-col">
+                            <label for="diaryContent" class="block text-xs font-bold text-stone-400 dark:text-zinc-500 uppercase tracking-wider mb-2">本文</label>
+                            <textarea id="diaryContent" placeholder="ここに今日の出来事や感じたこと、考えたことなどを自由に書きましょう..." class="w-full flex-1 p-4 bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-diary-500 dark:focus:ring-diary-400 resize-none leading-relaxed text-stone-800 dark:text-zinc-100 min-h-[220px]"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="mt-12 pt-6 border-t border-stone-200 dark:border-zinc-800 text-center text-xs text-stone-400 dark:text-zinc-500">
+            <p>My Simple Diary © 2026. データはブラウザにのみ保存されます。</p>
+        </footer>
+    </div>
+
+    <!-- Notification system -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-stone-800 dark:bg-zinc-700 text-white px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2 transform translate-y-20 opacity-0 transition duration-300 pointer-events-none z-50">
+        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+        <span id="toastMessage">保存しました</span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
