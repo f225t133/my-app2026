@@ -7,11 +7,11 @@ let selectedStamp = '';
 let currentPhotoBase64 = '';
 
 const moodMap = {
-    cocoa: { emoji: '☕', text: 'ココア', color: 'bg-p-pink' },
-    chino: { emoji: '🐰', text: 'チノ', color: 'bg-p-blue-light' },
-    rize: { emoji: '🔫', text: 'リゼ', color: 'bg-p-purple' },
-    chiya: { emoji: '🍵', text: '千夜', color: 'bg-p-blue' },
-    syaro: { emoji: '🥞', text: 'シャロ', color: 'bg-p-pink-light' }
+    happy: { emoji: '💖', text: 'さいこー', color: 'bg-p-pink' },
+    good: { emoji: '🌸', text: 'はっぴー', color: 'bg-p-pink-light' },
+    neutral: { emoji: '☁️', text: 'ふつう', color: 'bg-p-blue-light' },
+    tired: { emoji: '💤', text: 'おつかれ', color: 'bg-p-purple' },
+    sad: { emoji: '☔', text: 'しょぼん', color: 'bg-p-blue' }
 };
 
 const stampMap = {
