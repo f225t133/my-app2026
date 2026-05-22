@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
 
 :root {
-    --p-pink: #ffafcc;
+    --c-cocoa: #ffafcc;      /* ココア: ピンク */
+    --c-chino: #a2d2ff;      /* チノ: 水色 */
+    --c-rize: #cdb4db;       /* リゼ: 紫 */
+    --c-chiya: #b7e4c7;      /* 千夜: 緑 */
+    --c-syaro: #fcf6bd;      /* シャロ: 黄色 */
+    --p-pink: var(--c-cocoa);
     --p-pink-light: #ffc8dd;
-    --p-blue: #a2d2ff;
+    --p-blue: var(--c-chino);
     --p-blue-light: #bde0fe;
-    --p-purple: #cdb4db;
+    --p-purple: var(--c-rize);
     --p-cream: #fefae0;
     --p-white: #ffffff;
     --p-text: #5f4b66;
@@ -13,12 +18,12 @@
 
 body {
     font-family: 'Zen Maru Gothic', sans-serif;
-    background-color: #fdf0f6; /* 薄いピンクの背景 */
+    background-color: #fff9fb; /* ほんのりピンクのカフェ風背景 */
     background-image: 
-        radial-gradient(var(--p-pink-light) 1px, transparent 1px),
-        radial-gradient(var(--p-pink-light) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: 0 0, 20px 20px;
+        radial-gradient(var(--c-cocoa) 1px, transparent 1px),
+        radial-gradient(var(--c-chino) 1px, transparent 1px);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
     color: var(--p-text);
 }
 

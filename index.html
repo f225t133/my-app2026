@@ -40,23 +40,23 @@
         <header class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
             <div class="flex items-center gap-4">
                 <div class="p-4 bg-p-pink text-white rounded-[25px] shadow-[0_6px_0_#ff8fab] animate-bounce-slow">
-                    <i data-lucide="sparkles" class="w-8 h-8"></i>
+                    <i data-lucide="coffee" class="w-8 h-8"></i>
                 </div>
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-p-text dark:text-pink-200">ぷりぷり日記帳</h1>
-                    <p class="text-sm text-p-pink font-bold">きらきらな毎日をのこそう✨</p>
+                    <h1 class="text-3xl font-bold tracking-tight text-p-text dark:text-pink-200">ラビットハウス日記</h1>
+                    <p class="text-sm text-p-pink font-bold">心をぴょんぴょんさせよう✨</p>
                 </div>
             </div>
             
             <div class="flex items-center gap-4">
                 <!-- Theme Toggle -->
-                <button id="themeToggle" class="puri-btn px-4 py-3 bg-white dark:bg-zinc-800 text-p-purple" title="テーマ切り替え">
+                <button id="themeToggle" class="puri-btn px-4 py-3 bg-white dark:bg-zinc-800 text-p-purple" title="よるのラビットハウス">
                     <i data-lucide="sun" id="sunIcon" class="w-6 h-6 hidden"></i>
                     <i data-lucide="moon" id="moonIcon" class="w-6 h-6"></i>
                 </button>
 
                 <!-- BGM Toggle -->
-                <button id="bgmToggle" class="puri-btn px-4 py-3 bg-white dark:bg-zinc-800 text-p-pink" title="BGMをながす">
+                <button id="bgmToggle" class="puri-btn px-4 py-3 bg-white dark:bg-zinc-800 text-p-pink" title="カフェの音楽">
                     <i data-lucide="music" id="musicIcon" class="w-6 h-6"></i>
                     <i data-lucide="volume-x" id="muteIcon" class="w-6 h-6 hidden"></i>
                 </button>
@@ -122,8 +122,8 @@
                 <div class="puri-card p-8 flex-1 flex flex-col min-h-[400px]">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-p-text dark:text-pink-200">
-                            <i data-lucide="flower-2" class="w-6 h-6 text-p-purple"></i>
-                            おもいで
+                            <i data-lucide="rabbit" class="w-6 h-6 text-p-purple"></i>
+                            おもいでメニュー
                         </h2>
                         <span id="diaryCount" class="text-xs bg-p-pink text-white px-3 py-1 rounded-full font-bold">0件</span>
                     </div>
@@ -154,7 +154,7 @@
                                 <span id="selectedDayOfWeek" class="bg-p-pink-light text-p-text px-3 py-1 rounded-full">木曜日</span>
                                 <span id="selectedFullDate">2026年5月21日</span>
                             </div>
-                            <h2 class="text-2xl font-bold text-p-text dark:text-pink-100" id="editorViewTitle">きょうのきろく</h2>
+                            <h2 class="text-2xl font-bold text-p-text dark:text-pink-100" id="editorViewTitle">ご注文は日記ですか？</h2>
                         </div>
                         
                         <!-- Actions -->
@@ -163,8 +163,8 @@
                                 <i data-lucide="trash-2" class="w-5 h-5"></i>
                             </button>
                             <button id="saveBtn" class="puri-btn px-8 py-3 bg-p-pink text-white flex-1 sm:flex-none">
-                                <i data-lucide="heart" class="w-5 h-5"></i>
-                                ほぞん
+                                <i data-lucide="utensils" class="w-5 h-5"></i>
+                                注文する
                             </button>
                         </div>
                     </div>
@@ -173,27 +173,27 @@
                     <div class="p-8 flex-1 flex flex-col gap-8">
                         <!-- Mood Selector -->
                         <div>
-                            <label class="block text-sm font-bold text-p-pink mb-4">きょうのきぶん</label>
+                            <label class="block text-sm font-bold text-p-pink mb-4">きょうのブレンド</label>
                             <div class="grid grid-cols-5 gap-3" id="moodSelector">
-                                <button data-mood="happy" class="mood-btn p-4 flex flex-col items-center gap-1" title="さいこー！">
-                                    <span class="text-3xl">💖</span>
-                                    <span class="text-[10px] font-bold text-p-text">さいこー</span>
+                                <button data-mood="cocoa" class="mood-btn p-4 flex flex-col items-center gap-1" title="ココア">
+                                    <span class="text-3xl">☕</span>
+                                    <span class="text-[10px] font-bold text-p-text">ココア</span>
                                 </button>
-                                <button data-mood="good" class="mood-btn p-4 flex flex-col items-center gap-1" title="はっぴー">
-                                    <span class="text-3xl">🌸</span>
-                                    <span class="text-[10px] font-bold text-p-text">はっぴー</span>
+                                <button data-mood="chino" class="mood-btn p-4 flex flex-col items-center gap-1" title="チノ">
+                                    <span class="text-3xl">🐰</span>
+                                    <span class="text-[10px] font-bold text-p-text">チノ</span>
                                 </button>
-                                <button data-mood="neutral" class="mood-btn p-4 flex flex-col items-center gap-1" title="ふつう">
-                                    <span class="text-3xl">☁️</span>
-                                    <span class="text-[10px] font-bold text-p-text">ふつう</span>
+                                <button data-mood="rize" class="mood-btn p-4 flex flex-col items-center gap-1" title="リゼ">
+                                    <span class="text-3xl">🔫</span>
+                                    <span class="text-[10px] font-bold text-p-text">リゼ</span>
                                 </button>
-                                <button data-mood="tired" class="mood-btn p-4 flex flex-col items-center gap-1" title="おつかれ">
-                                    <span class="text-3xl">💤</span>
-                                    <span class="text-[10px] font-bold text-p-text">おつかれ</span>
+                                <button data-mood="chiya" class="mood-btn p-4 flex flex-col items-center gap-1" title="千夜">
+                                    <span class="text-3xl">🍵</span>
+                                    <span class="text-[10px] font-bold text-p-text">千夜</span>
                                 </button>
-                                <button data-mood="sad" class="mood-btn p-4 flex flex-col items-center gap-1" title="しょぼん">
-                                    <span class="text-3xl">☔</span>
-                                    <span class="text-[10px] font-bold text-p-text">しょぼん</span>
+                                <button data-mood="syaro" class="mood-btn p-4 flex flex-col items-center gap-1" title="シャロ">
+                                    <span class="text-3xl">🥞</span>
+                                    <span class="text-[10px] font-bold text-p-text">シャロ</span>
                                 </button>
                             </div>
                         </div>
