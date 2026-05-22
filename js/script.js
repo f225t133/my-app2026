@@ -243,12 +243,12 @@ function saveDiary() {
     const content = diaryContent.value.trim();
 
     if (!title && !content && !selectedMood && !currentPhotoBase64) {
-        showToast("なにか注文してね〜✨", true);
+        showToast("なにか書いてね〜✨", true);
         return;
     }
 
     diaries[dateKey] = {
-        title: title || "むだいのオーダー",
+        title: title || "むだいのきろく",
         content: content,
         mood: selectedMood,
         stamp: selectedStamp,
@@ -258,12 +258,12 @@ function saveDiary() {
 
     try {
         localStorage.setItem('diaries_app_data', JSON.stringify(diaries));
-        showToast("オーダー承りました！✨");
+        showToast("ほぞんしました！✨");
         loadDiaryEntry();
         renderCalendar();
         renderDiaryList();
     } catch (e) {
-        showToast("メニューがいっぱいかも...😢", true);
+        showToast("容量がいっぱいかも...画像を消してみて😢", true);
     }
 }
 
@@ -271,10 +271,10 @@ function saveDiary() {
 function deleteDiary() {
     const dateKey = formatDateKey(selectedDate);
     if (diaries[dateKey]) {
-        if (confirm("このオーダーを取り消しちゃうの？😢")) {
+        if (confirm("このおもいでを消しちゃうの？😢")) {
             delete diaries[dateKey];
             localStorage.setItem('diaries_app_data', JSON.stringify(diaries));
-            showToast("オーダーを取り消しました...");
+            showToast("おもいでを消しました...");
             loadDiaryEntry();
             renderCalendar();
             renderDiaryList();
