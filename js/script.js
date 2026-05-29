@@ -7,11 +7,11 @@ let selectedStamp = '';
 let currentPhotoBase64 = '';
 
 const moodMap = {
-    happy: { emoji: '💖', text: 'さいこー', color: 'bg-p-pink' },
-    good: { emoji: '🌸', text: 'はっぴー', color: 'bg-p-pink-light' },
-    neutral: { emoji: '☁️', text: 'ふつう', color: 'bg-p-blue-light' },
-    tired: { emoji: '💤', text: 'おつかれ', color: 'bg-p-purple' },
-    sad: { emoji: '☔', text: 'しょぼん', color: 'bg-p-blue' }
+    cocoa: { emoji: '☕', text: 'ココア', color: 'bg-p-pink' },
+    chino: { emoji: '🐾', text: 'チノ', color: 'bg-p-blue' },
+    rize: { emoji: '💜', text: 'リゼ', color: 'bg-p-purple' },
+    chiya: { emoji: '🍵', text: '千夜', color: 'bg-p-green' },
+    syaro: { emoji: '🐰', text: 'シャロ', color: 'bg-p-yellow' }
 };
 
 const stampMap = {
@@ -243,12 +243,12 @@ function saveDiary() {
     const content = diaryContent.value.trim();
 
     if (!title && !content && !selectedMood && !currentPhotoBase64) {
-        showToast("なにか書いてね〜✨", true);
+        showToast("なにか注文してね〜☕", true);
         return;
     }
 
     diaries[dateKey] = {
-        title: title || "むだいのきろく",
+        title: title || "いつものブレンド",
         content: content,
         mood: selectedMood,
         stamp: selectedStamp,
@@ -258,12 +258,12 @@ function saveDiary() {
 
     try {
         localStorage.setItem('diaries_app_data', JSON.stringify(diaries));
-        showToast("ほぞんしました！✨");
+        showToast("ご注文承りました！✨");
         loadDiaryEntry();
         renderCalendar();
         renderDiaryList();
     } catch (e) {
-        showToast("容量がいっぱいかも...画像を消してみて😢", true);
+        showToast("おなかいっぱいかも...画像を消してみて😢", true);
     }
 }
 

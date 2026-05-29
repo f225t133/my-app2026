@@ -17,9 +17,11 @@
                 extend: {
                     colors: {
                         p: {
-                            pink: '#ffafcc',
-                            blue: '#a2d2ff',
-                            purple: '#cdb4db',
+                            pink: '#ffafcc',   /* Cocoa */
+                            blue: '#a2d2ff',   /* Chino */
+                            purple: '#cdb4db', /* Rize */
+                            green: '#b7e4c7',  /* Chiya */
+                            yellow: '#fcf6bd', /* Syaro */
                             text: '#5f4b66',
                         }
                     }
@@ -163,8 +165,8 @@
                                 <i data-lucide="trash-2" class="w-5 h-5"></i>
                             </button>
                             <button id="saveBtn" class="puri-btn px-8 py-3 bg-p-pink text-white flex-1 sm:flex-none">
-                                <i data-lucide="utensils" class="w-5 h-5"></i>
-                                ほぞん
+                                <i data-lucide="coffee" class="w-5 h-5"></i>
+                                注文する
                             </button>
                         </div>
                     </div>
@@ -173,27 +175,27 @@
                     <div class="p-8 flex-1 flex flex-col gap-8">
                         <!-- Mood Selector -->
                         <div>
-                            <label class="block text-sm font-bold text-p-pink mb-4">きょうのきぶん</label>
+                            <label class="block text-sm font-bold text-p-pink mb-4">きょうのブレンド</label>
                             <div class="grid grid-cols-5 gap-3" id="moodSelector">
-                                <button data-mood="happy" class="mood-btn p-4 flex flex-col items-center gap-1" title="さいこー！">
-                                    <span class="text-3xl">💖</span>
-                                    <span class="text-[10px] font-bold text-p-text">さいこー</span>
+                                <button data-mood="cocoa" class="mood-btn p-4 flex flex-col items-center gap-1" title="ココア">
+                                    <span class="text-3xl">☕</span>
+                                    <span class="text-[10px] font-bold text-p-text">ココア</span>
                                 </button>
-                                <button data-mood="good" class="mood-btn p-4 flex flex-col items-center gap-1" title="はっぴー">
-                                    <span class="text-3xl">🌸</span>
-                                    <span class="text-[10px] font-bold text-p-text">はっぴー</span>
+                                <button data-mood="chino" class="mood-btn p-4 flex flex-col items-center gap-1" title="チノ">
+                                    <span class="text-3xl">🐾</span>
+                                    <span class="text-[10px] font-bold text-p-text">チノ</span>
                                 </button>
-                                <button data-mood="neutral" class="mood-btn p-4 flex flex-col items-center gap-1" title="ふつう">
-                                    <span class="text-3xl">☁️</span>
-                                    <span class="text-[10px] font-bold text-p-text">ふつう</span>
+                                <button data-mood="rize" class="mood-btn p-4 flex flex-col items-center gap-1" title="リゼ">
+                                    <span class="text-3xl">💜</span>
+                                    <span class="text-[10px] font-bold text-p-text">リゼ</span>
                                 </button>
-                                <button data-mood="tired" class="mood-btn p-4 flex flex-col items-center gap-1" title="おつかれ">
-                                    <span class="text-3xl">💤</span>
-                                    <span class="text-[10px] font-bold text-p-text">おつかれ</span>
+                                <button data-mood="chiya" class="mood-btn p-4 flex flex-col items-center gap-1" title="千夜">
+                                    <span class="text-3xl">🍵</span>
+                                    <span class="text-[10px] font-bold text-p-text">千夜</span>
                                 </button>
-                                <button data-mood="sad" class="mood-btn p-4 flex flex-col items-center gap-1" title="しょぼん">
-                                    <span class="text-3xl">☔</span>
-                                    <span class="text-[10px] font-bold text-p-text">しょぼん</span>
+                                <button data-mood="syaro" class="mood-btn p-4 flex flex-col items-center gap-1" title="シャロ">
+                                    <span class="text-3xl">🐰</span>
+                                    <span class="text-[10px] font-bold text-p-text">シャロ</span>
                                 </button>
                             </div>
                         </div>
