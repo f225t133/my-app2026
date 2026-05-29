@@ -378,13 +378,13 @@ function renderDiaryList(filterQuery = '') {
         const displayStamp = entry.stamp && entry.stamp !== 'none' ? stampMap[entry.stamp] : '';
         const formattedDate = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日 (${dayNames[dateObj.getDay()].replace('曜日', '')})`;
         const displayLedger = entry.ledgerAmount ? `
-            <div class="mt-2 flex items-center gap-1.5">
-                <span class="text-[10px] font-bold bg-p-blue/20 text-p-blue px-2 py-0.5 rounded-lg flex items-center gap-1">
-                    <i data-lucide="calculator" class="w-3 h-3"></i>
+            <div class="mt-3 flex items-center gap-2">
+                <span class="text-xs font-bold bg-p-blue text-white px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                    <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
                     ¥${parseInt(entry.ledgerAmount).toLocaleString()}
                 </span>
                 ${entry.ledgerCategory && entry.ledgerCategory !== 'none' ? `
-                    <span class="text-[10px] font-bold bg-p-purple/10 text-p-purple px-2 py-0.5 rounded-lg flex items-center gap-1">
+                    <span class="text-[10px] font-bold border-2 border-p-blue text-p-blue px-2 py-0.5 rounded-full flex items-center gap-1">
                         <i data-lucide="${categoryMap[entry.ledgerCategory]?.icon || 'tag'}" class="w-3 h-3"></i>
                         ${categoryMap[entry.ledgerCategory]?.label}
                     </span>
