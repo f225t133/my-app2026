@@ -377,20 +377,9 @@ function renderDiaryList(filterQuery = '') {
         const displayMood = moodInfo ? moodInfo.emoji : '✨';
         const displayStamp = entry.stamp && entry.stamp !== 'none' ? stampMap[entry.stamp] : '';
         const formattedDate = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日 (${dayNames[dateObj.getDay()].replace('曜日', '')})`;
-        const displayLedger = entry.ledgerAmount ? `
-            <div class="mt-3 flex items-center gap-2">
-                <span class="text-xs font-bold bg-p-blue text-white px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
-                    <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
-                    ¥${parseInt(entry.ledgerAmount).toLocaleString()}
-                </span>
-                ${entry.ledgerCategory && entry.ledgerCategory !== 'none' ? `
-                    <span class="text-[10px] font-bold border-2 border-p-blue text-p-blue px-2 py-0.5 rounded-full flex items-center gap-1">
-                        <i data-lucide="${categoryMap[entry.ledgerCategory]?.icon || 'tag'}" class="w-3 h-3"></i>
-                        ${categoryMap[entry.ledgerCategory]?.label}
-                    </span>
-                ` : ''}
-            </div>
-        ` : '';
+        
+        const amountVal = entry.ledgerAmount ? parseInt(entry.ledgerAmount).toLocaleString() : '';
+        const categoryInfo = entry.ledgerCategory && entry.ledgerCategory !== 'none' ? categoryMap[entry.ledgerCategory] : null;
 
         listHTML += `
             <div onclick="selectDateByKey('${key}')" data-key="${key}" class="p-5 rounded-[25px] cursor-pointer transition-all duration-300 flex justify-between items-center border-4 ${
@@ -399,17 +388,28 @@ function renderDiaryList(filterQuery = '') {
                 : 'bg-white dark:bg-zinc-800 border-p-pink-light/30 hover:border-p-pink-light'
             }">
                 <div class="flex-1 min-w-0 pr-4">
-                    <div class="flex items-center gap-2 mb-2">
+                    <div class="flex items-center flex-wrap gap-2 mb-2">
                         <span class="text-[10px] font-bold text-p-pink uppercase tracking-widest">${key.replace(/-/g, '.')}</span>
                         <span class="text-[10px] bg-p-pink text-white px-2 py-0.5 rounded-full font-bold">${formattedDate}</span>
                         ${displayStamp ? `<span class="text-sm">${displayStamp}</span>` : ''}
+                        ${amountVal ? `
+                            <span class="text-[10px] font-bold bg-p-blue text-white px-2 py-0.5 rounded-full flex items-center gap-1 ml-auto">
+                                <i data-lucide="shopping-cart" class="w-3 h-3"></i>
+                                ¥${amountVal}
+                            </span>
+                        ` : ''}
+                        ${categoryInfo ? `
+                            <span class="text-[10px] font-bold border-2 border-p-blue text-p-blue px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <i data-lucide="${categoryInfo.icon}" class="w-3 h-3"></i>
+                                ${categoryInfo.label}
+                            </span>
+                        ` : ''}
                     </div>
                     <div class="flex gap-3 items-start">
                         ${entry.photo ? `<img src="${entry.photo}" class="w-12 h-12 object-cover rounded-xl border-2 border-p-pink-light flex-shrink-0">` : ''}
                         <div class="min-w-0 flex-1">
                             <h4 class="font-bold text-md truncate text-p-text dark:text-pink-100">${entry.title || 'むだい'}</h4>
                             <p class="text-xs text-p-text/60 dark:text-pink-100/60 truncate mt-1">${entry.content || '本文なし'}</p>
-                            ${displayLedger}
                         </div>
                     </div>
                 </div>
