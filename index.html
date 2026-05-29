@@ -120,6 +120,23 @@
                     </div>
                 </div>
 
+                <!-- Ledger Summary Card -->
+                <div class="puri-card p-8">
+                    <h2 class="text-xl font-bold flex items-center gap-2 text-p-text dark:text-pink-200 mb-6">
+                        <i data-lucide="calculator" class="w-6 h-6 text-p-pink"></i>
+                        こんげつの記帳
+                    </h2>
+                    <div class="bg-p-pink-light/20 rounded-2xl p-4 border-2 border-p-pink-light">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-p-pink uppercase">合計支出</span>
+                            <span id="monthlyTotal" class="text-xl font-bold text-p-text">¥0</span>
+                        </div>
+                        <div id="categoryBreakdown" class="space-y-2 mt-4">
+                            <!-- JS generated breakdown -->
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Diary List Summary -->
                 <div class="puri-card p-8 flex-1 flex flex-col min-h-[400px]">
                     <div class="flex justify-between items-center mb-6">
@@ -244,6 +261,31 @@
                         <div class="flex-1 flex flex-col">
                             <label for="diaryContent" class="block text-sm font-bold text-p-pink mb-3">ないよう</label>
                             <textarea id="diaryContent" placeholder="ここにたくさん書いてね..." class="w-full flex-1 p-6 bg-p-pink-light/10 border-2 border-p-pink-light rounded-[25px] focus:outline-none focus:border-p-pink resize-none leading-relaxed text-p-text font-medium min-h-[250px] diary-paper"></textarea>
+                        </div>
+
+                        <!-- Ledger Input -->
+                        <div class="p-6 bg-p-blue-light/10 border-4 border-p-blue-light rounded-[30px] flex flex-col gap-4">
+                            <h3 class="font-bold text-p-text flex items-center gap-2">
+                                <i data-lucide="calculator" class="w-5 h-5 text-p-blue"></i>
+                                本日の記帳
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="ledgerAmount" class="block text-xs font-bold text-p-blue mb-2">金額 (円)</label>
+                                    <input type="number" id="ledgerAmount" placeholder="0" class="w-full px-4 py-3 bg-white border-2 border-p-blue-light rounded-xl focus:outline-none focus:border-p-blue font-bold text-p-text">
+                                </div>
+                                <div>
+                                    <label for="ledgerCategory" class="block text-xs font-bold text-p-blue mb-2">カテゴリー</label>
+                                    <select id="ledgerCategory" class="w-full px-4 py-3 bg-white border-2 border-p-blue-light rounded-xl focus:outline-none focus:border-p-blue font-bold text-p-text">
+                                        <option value="none">なし</option>
+                                        <option value="food">飲食・カフェ</option>
+                                        <option value="goods">グッズ・本</option>
+                                        <option value="daily">日用品</option>
+                                        <option value="leisure">遊び・イベント</option>
+                                        <option value="other">その他</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

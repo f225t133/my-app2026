@@ -19,6 +19,14 @@ const stampMap = {
     work: '💻', game: '🎮', star: '🌟', none: ''
 };
 
+const categoryMap = {
+    food: { label: '飲食・カフェ', icon: 'coffee' },
+    goods: { label: 'グッズ・本', icon: 'book' },
+    daily: { label: '日用品', icon: 'shopping-basket' },
+    leisure: { label: '遊び・イベント', icon: 'sparkles' },
+    other: { label: 'その他', icon: 'more-horizontal' }
+};
+
 const dayNames = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"];
 
 // --- DOM Elements ---
@@ -35,6 +43,11 @@ const diaryContent = document.getElementById('diaryContent');
 const saveBtn = document.getElementById('saveBtn');
 const deleteBtn = document.getElementById('deleteBtn');
 const editorViewTitle = document.getElementById('editorViewTitle');
+
+const ledgerAmount = document.getElementById('ledgerAmount');
+const ledgerCategory = document.getElementById('ledgerCategory');
+const monthlyTotal = document.getElementById('monthlyTotal');
+const categoryBreakdown = document.getElementById('categoryBreakdown');
 
 const diaryList = document.getElementById('diaryList');
 const diaryCount = document.getElementById('diaryCount');
@@ -89,6 +102,51 @@ function formatDateKey(date) {
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
     return `${y}-${m}-${d}`;
+}
+
+// --- Ledger Helpers ---
+function updateMonthlyLedger() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    let total = 0;
+    const breakdown = {};
+
+    Object.keys(diaries).forEach(key => {
+        const date = new Date(key);
+        if (date.getFullYear() === year && date.getMonth() === month) {
+            const entry = diaries[key];
+            if (entry.ledgerAmount) {
+                const amount = parseInt(entry.ledgerAmount) || 0;
+                total += amount;
+                
+                const cat = entry.ledgerCategory || 'other';
+                if (cat !== 'none') {
+                    breakdown[cat] = (breakdown[cat] || 0) + amount;
+                }
+            }
+        }
+    });
+
+    monthlyTotal.textContent = `¥${total.toLocaleString()}`;
+    
+    let breakdownHTML = '';
+    Object.keys(breakdown).forEach(cat => {
+        const info = categoryMap[cat];
+        if (info) {
+            breakdownHTML += `
+                <div class="flex justify-between items-center text-xs">
+                    <span class="flex items-center gap-1 text-p-text/70">
+                        <i data-lucide="${info.icon}" class="w-3 h-3"></i>
+                        ${info.label}
+                    </span>
+                    <span class="font-bold text-p-text">¥${breakdown[cat].toLocaleString()}</span>
+                </div>
+            `;
+        }
+    });
+    
+    categoryBreakdown.innerHTML = breakdownHTML || '<p class="text-[10px] text-center text-p-text/40 py-2">今月の記録はありません</p>';
+    lucide.createIcons();
 }
 
 // --- Image Processing ---
@@ -158,10 +216,14 @@ function renderCalendar() {
 
         let moodEmoji = "";
         let stampEmoji = "";
+        let ledgerInfo = "";
         if (hasDiary && !isSelected) {
             moodEmoji = `<span class="absolute top-0 right-0 text-[10px]">${moodMap[diaries[dateKey].mood]?.emoji || '✍️'}</span>`;
             if (diaries[dateKey].stamp && diaries[dateKey].stamp !== 'none') {
                 stampEmoji = `<span class="absolute bottom-0 left-0 text-[10px]">${stampMap[diaries[dateKey].stamp]}</span>`;
+            }
+            if (diaries[dateKey].ledgerAmount && diaries[dateKey].ledgerAmount > 0) {
+                ledgerInfo = `<span class="absolute bottom-0 right-0 text-[8px] bg-p-blue text-white px-1 rounded-sm">¥</span>`;
             }
         }
 
@@ -170,11 +232,13 @@ function renderCalendar() {
                 <span>${i}</span>
                 ${moodEmoji}
                 ${stampEmoji}
+                ${ledgerInfo}
             </button>
         `;
     }
 
     calendarDays.innerHTML = daysHTML;
+    updateMonthlyLedger();
 }
 
 window.selectDateByDay = function(day) {
@@ -202,6 +266,8 @@ function loadDiaryEntry() {
     photoPreview.classList.add('hidden');
     photoPlaceholder.classList.remove('hidden');
     removePhotoBtn.classList.add('hidden');
+    ledgerAmount.value = '';
+    ledgerCategory.value = 'none';
 
     if (entry) {
         diaryTitle.value = entry.title || '';
@@ -209,6 +275,8 @@ function loadDiaryEntry() {
         selectedMood = entry.mood || '';
         selectedStamp = entry.stamp || 'none';
         currentPhotoBase64 = entry.photo || '';
+        ledgerAmount.value = entry.ledgerAmount || '';
+        ledgerCategory.value = entry.ledgerCategory || 'none';
         
         if (selectedMood) {
             const activeBtn = document.querySelector(`[data-mood="${selectedMood}"]`);
@@ -241,8 +309,10 @@ function saveDiary() {
     const dateKey = formatDateKey(selectedDate);
     const title = diaryTitle.value.trim();
     const content = diaryContent.value.trim();
+    const amount = ledgerAmount.value;
+    const category = ledgerCategory.value;
 
-    if (!title && !content && !selectedMood && !currentPhotoBase64) {
+    if (!title && !content && !selectedMood && !currentPhotoBase64 && !amount) {
         showToast("なにか注文してね〜☕", true);
         return;
     }
@@ -253,6 +323,8 @@ function saveDiary() {
         mood: selectedMood,
         stamp: selectedStamp,
         photo: currentPhotoBase64,
+        ledgerAmount: amount,
+        ledgerCategory: category,
         updatedAt: new Date().toISOString()
     };
 
@@ -305,6 +377,7 @@ function renderDiaryList(filterQuery = '') {
         const displayMood = moodInfo ? moodInfo.emoji : '✨';
         const displayStamp = entry.stamp && entry.stamp !== 'none' ? stampMap[entry.stamp] : '';
         const formattedDate = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日 (${dayNames[dateObj.getDay()].replace('曜日', '')})`;
+        const displayLedger = entry.ledgerAmount ? `<div class="text-[10px] font-bold text-p-blue-light mt-1 flex items-center gap-1"><i data-lucide="calculator" class="w-3 h-3"></i> ¥${parseInt(entry.ledgerAmount).toLocaleString()}</div>` : '';
 
         listHTML += `
             <div onclick="selectDateByKey('${key}')" data-key="${key}" class="p-5 rounded-[25px] cursor-pointer transition-all duration-300 flex justify-between items-center border-4 ${
@@ -323,6 +396,7 @@ function renderDiaryList(filterQuery = '') {
                         <div class="min-w-0 flex-1">
                             <h4 class="font-bold text-md truncate text-p-text dark:text-pink-100">${entry.title || 'むだい'}</h4>
                             <p class="text-xs text-p-text/60 dark:text-pink-100/60 truncate mt-1">${entry.content || '本文なし'}</p>
+                            ${displayLedger}
                         </div>
                     </div>
                 </div>
