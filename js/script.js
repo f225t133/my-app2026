@@ -377,7 +377,20 @@ function renderDiaryList(filterQuery = '') {
         const displayMood = moodInfo ? moodInfo.emoji : '✨';
         const displayStamp = entry.stamp && entry.stamp !== 'none' ? stampMap[entry.stamp] : '';
         const formattedDate = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日 (${dayNames[dateObj.getDay()].replace('曜日', '')})`;
-        const displayLedger = entry.ledgerAmount ? `<div class="text-[10px] font-bold text-p-blue-light mt-1 flex items-center gap-1"><i data-lucide="calculator" class="w-3 h-3"></i> ¥${parseInt(entry.ledgerAmount).toLocaleString()}</div>` : '';
+        const displayLedger = entry.ledgerAmount ? `
+            <div class="mt-2 flex items-center gap-1.5">
+                <span class="text-[10px] font-bold bg-p-blue/20 text-p-blue px-2 py-0.5 rounded-lg flex items-center gap-1">
+                    <i data-lucide="calculator" class="w-3 h-3"></i>
+                    ¥${parseInt(entry.ledgerAmount).toLocaleString()}
+                </span>
+                ${entry.ledgerCategory && entry.ledgerCategory !== 'none' ? `
+                    <span class="text-[10px] font-bold bg-p-purple/10 text-p-purple px-2 py-0.5 rounded-lg flex items-center gap-1">
+                        <i data-lucide="${categoryMap[entry.ledgerCategory]?.icon || 'tag'}" class="w-3 h-3"></i>
+                        ${categoryMap[entry.ledgerCategory]?.label}
+                    </span>
+                ` : ''}
+            </div>
+        ` : '';
 
         listHTML += `
             <div onclick="selectDateByKey('${key}')" data-key="${key}" class="p-5 rounded-[25px] cursor-pointer transition-all duration-300 flex justify-between items-center border-4 ${
